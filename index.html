@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Curso Web para Periodistas — Inicio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: '#2563eb'
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui']
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 font-sans">
+  <header class="border-b border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-900/60 backdrop-blur sticky top-0 z-10">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a class="text-lg font-bold text-brand" href="#">Curso Web para Periodistas</a>
+      <div class="flex items-center gap-3">
+        <a href="README.md" class="hidden sm:inline-flex text-sm text-slate-700 dark:text-slate-300 hover:underline">README</a>
+        <button id="themeToggle" class="inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Cambiar tema">
+          <span>🌓</span>
+          <span class="hidden sm:block">Tema</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <section class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold">Bienvenid@</h1>
+      <p class="mt-2 text-slate-600 dark:text-slate-300">Explora los módulos del curso. Cada tarjeta abre una presentación interactiva.</p>
+    </section>
+
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card HTML -->
+      <a href="html.html" class="group block bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        <div class="p-5">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">HTML</h2>
+            <span class="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded px-2 py-0.5">Fundamentos</span>
+          </div>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Estructura, semántica y buenas prácticas.</p>
+          <div class="mt-4 inline-flex items-center gap-1 text-brand group-hover:underline">Abrir →</div>
+        </div>
+      </a>
+
+      <!-- Card CSS -->
+      <a href="css.html" class="group block bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        <div class="p-5">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">CSS</h2>
+            <span class="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded px-2 py-0.5">Estilos</span>
+          </div>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Selectores, box model, responsivo.</p>
+          <div class="mt-4 inline-flex items-center gap-1 text-brand group-hover:underline">Abrir →</div>
+        </div>
+      </a>
+
+      <!-- Card Tailwind -->
+      <a href="tailwind.html" class="group block bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        <div class="p-5">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Tailwind CSS (CDN)</h2>
+            <span class="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded px-2 py-0.5">Prototipos</span>
+          </div>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Desarrollo ágil con clases utilitarias.</p>
+          <div class="mt-4 inline-flex items-center gap-1 text-brand group-hover:underline">Abrir →</div>
+        </div>
+      </a>
+
+      <!-- Card Git -->
+      <a href="git.html" class="group block bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        <div class="p-5">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold">Git</h2>
+            <span class="text-xs bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded px-2 py-0.5">Control de versiones</span>
+          </div>
+          <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Flujo básico para colaborar y publicar.</p>
+          <div class="mt-4 inline-flex items-center gap-1 text-brand group-hover:underline">Abrir →</div>
+        </div>
+      </a>
+    </section>
+
+    <section class="mt-12 text-center text-sm text-slate-600 dark:text-slate-300">
+      <p>Consejo: usa las flechas del teclado (← →) dentro de cada presentación para avanzar.</p>
+    </section>
+  </main>
+
+  <footer class="mt-10 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+    <p>
+      © <span id="y"></span> Curso Web para Periodistas · <a href="LICENSE" class="hover:underline">Licencia</a>
+    </p>
+  </footer>
+
+  <script>
+    // Año en el footer
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Toggle de tema (dark mode)
+    const btn = document.getElementById('themeToggle');
+    const root = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') root.classList.add('dark');
+    btn.addEventListener('click', () => {
+      root.classList.toggle('dark');
+      const isDark = root.classList.contains('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
