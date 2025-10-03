@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git y GitHub Básico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            color: white;
+            text-align: center;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 950px;
+            text-align: left;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .content h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+        
+        .content p, .content li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .content ul, .content ol {
+            list-style-position: inside;
+            margin-left: 20px;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        button {
+            padding: 15px 35px;
+            font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.2em;
+        }
+        
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .diagram {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .warning {
+            background: rgba(255, 152, 0, 0.2);
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">29</span>
+        </div>
+
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <h1>Git y GitHub</h1>
+            <p style="font-size: 1.5em; margin-top: 20px;">Control de Versiones para Desarrolladores</p>
+            <p style="font-size: 1.2em; margin-top: 10px;">🚀 Del código local a la colaboración global</p>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h2>¿Qué es Git?</h2>
+            <div class="content">
+                <p style="font-size: 1.4em;"><span class="highlight">Git</span> es un sistema de <span class="highlight">control de versiones distribuido</span> para rastrear cambios en código.</p>
+                
+                <h3 style="margin-top: 30px;">¿Para qué sirve?</h3>
+                <ul>
+                    <li><strong>Historial completo:</strong> Guarda cada cambio que haces en tu proyecto</li>
+                    <li><strong>Trabajo en equipo:</strong> Varios desarrolladores trabajando simultáneamente</li>
+                    <li><strong>Ramas:</strong> Experimentar sin afectar el código principal</li>
+                    <li><strong>Reversión:</strong> Volver a versiones anteriores si algo sale mal</li>
+                    <li><strong>Backup:</strong> Tu código está seguro y respaldado</li>
+                </ul>
+                
+                <div class="success" style="margin-top: 30px;">
+                    <strong>💡 Analogía:</strong> Git es como una máquina del tiempo para tu código. Puedes ver qué cambió, cuándo y por qué.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <h2>¿Cómo Funciona Git?</h2>
+            <div class="content">
+                <h3>Sistema de 3 áreas:</h3>
+                
+                <div class="diagram">
+                    <p style="font-size: 1.2em;">Working Directory (Directorio de trabajo)</p>
+                    <p style="margin: 10px 0;">↓ git add</p>
+                    <p style="font-size: 1.2em;">Staging Area (Área de preparación)</p>
+                    <p style="margin: 10px 0;">↓ git commit</p>
+                    <p style="font-size: 1.2em;">Repository (Repositorio local)</p>
+                    <p style="margin: 10px 0;">↓ git push</p>
+                    <p style="font-size: 1.2em;">Remote Repository (Repositorio remoto)</p>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Flujo básico:</h3>
+                <ol>
+                    <li><strong>Modificas archivos</strong> en tu carpeta de trabajo</li>
+                    <li><strong>Agregas cambios</strong> al área de preparación (git add)</li>
+                    <li><strong>Confirmas cambios</strong> al repositorio local (git commit)</li>
+                    <li><strong>Envías cambios</strong> al repositorio remoto (git push)</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h2>¿Qué es una Rama (Branch)?</h2>
+            <div class="content">
+                <p style="font-size: 1.3em;">Una <span class="highlight">rama</span> es una línea independiente de desarrollo.</p>
+                
+                <div class="diagram">
+                    <p>main: ●━━●━━●━━●━━●</p>
+                    <p style="margin-top: 20px;">feature: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;╰━●━●━●╮</p>
+                    <p style="margin-top: 10px;">main: ●━━●━━●━━●━━●━━●</p>
+                </div>
+                
+                <h3 style="margin-top: 30px;">¿Para qué sirven?</h3>
+                <ul>
+                    <li><strong>Rama main/master:</strong> Código estable y listo para producción</li>
+                    <li><strong>Ramas de features:</strong> Desarrollar nuevas funcionalidades</li>
+                    <li><strong>Ramas de bugfix:</strong> Corregir errores específicos</li>
+                    <li><strong>Experimentación:</strong> Probar ideas sin romper nada</li>
+                </ul>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>💡 Ventaja:</strong> Puedes trabajar en múltiples características simultáneamente sin interferir entre ellas.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h2>Comandos Principales de Git</h2>
+            <div class="content">
+                <h3>Configuración inicial:</h3>
+                <div class="code-block">git config --global user.name "Tu Nombre"<br>git config --global user.email "tu@email.com"</div>
+                
+                <h3>Crear repositorio:</h3>
+                <div class="code-block">git init                    # Inicia un repo en carpeta actual<br>git clone [url]            # Clona un repo existente</div>
+                
+                <h3>Operaciones básicas:</h3>
+                <div class="code-block">git status                 # Ver estado de archivos<br>git add .                  # Agregar todos los cambios<br>git add archivo.txt        # Agregar archivo específico<br>git commit -m "mensaje"    # Guardar cambios con mensaje<br>git push                   # Enviar al repositorio remoto<br>git pull                   # Traer cambios del remoto</div>
+                
+                <h3>Ver historial:</h3>
+                <div class="code-block">git log                    # Ver historial de commits<br>git log --oneline          # Historial resumido</div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <h2>Git vs GitHub - Diferencias</h2>
+            <div class="content">
+                <div class="two-columns">
+                    <div>
+                        <h3>Git</h3>
+                        <p>🖥️ <strong>Software local</strong></p>
+                        <ul>
+                            <li>Programa instalado en tu computadora</li>
+                            <li>Funciona offline</li>
+                            <li>Control de versiones</li>
+                            <li>Línea de comandos</li>
+                            <li>Gratuito y open source</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>GitHub</h3>
+                        <p>☁️ <strong>Plataforma web</strong></p>
+                        <ul>
+                            <li>Servicio de hosting en la nube</li>
+                            <li>Requiere internet</li>
+                            <li>Colaboración y compartir</li>
+                            <li>Interfaz gráfica web</li>
+                            <li>Freemium</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="success" style="margin-top: 30px;">
+                    <strong>💡 Analogía:</strong> Git es como Microsoft Word, GitHub es como OneDrive donde guardas y compartes archivos.
+                </div>
+                
+                <p style="margin-top: 20px; font-size: 1.3em; text-align: center;">
+                    <span class="highlight">Git</span> funciona solo. <span class="highlight">GitHub</span> necesita Git.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <h2>¿Cómo Usar GitHub?</h2>
+            <div class="content">
+                <h3>Funciones principales de GitHub:</h3>
+                <ul>
+                    <li><strong>Repositorios:</strong> Almacenar proyectos en la nube</li>
+                    <li><strong>Issues:</strong> Reportar bugs y solicitar features</li>
+                    <li><strong>Pull Requests:</strong> Proponer cambios al código</li>
+                    <li><strong>Actions:</strong> Automatizar tareas (CI/CD)</li>
+                    <li><strong>GitHub Pages:</strong> Hospedar sitios web estáticos</li>
+                    <li><strong>Colaboración:</strong> Trabajar en equipo</li>
+                </ul>
+                
+                <h3 style="margin-top: 30px;">Pasos para empezar:</h3>
+                <ol>
+                    <li>Crear cuenta en <span class="highlight">github.com</span></li>
+                    <li>Verificar email</li>
+                    <li>Crear tu primer repositorio</li>
+                    <li>Conectar Git local con GitHub</li>
+                </ol>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>✅ Tip:</strong> GitHub es como tu portafolio profesional. Los reclutadores revisan tu perfil de GitHub.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <h2>Crear o Forkear un Repositorio</h2>
+            <div class="content">
+                <h3>Crear repositorio nuevo:</h3>
+                <ol>
+                    <li>Ir a <span class="highlight">github.com</span> e iniciar sesión</li>
+                    <li>Click en el botón <strong>"New"</strong> o <strong>"+"</strong></li>
+                    <li>Seleccionar <strong>"New repository"</strong></li>
+                    <li>Completar información:
+                        <ul>
+                            <li>Nombre del repositorio</li>
+                            <li>Descripción (opcional)</li>
+                            <li>Público o Privado</li>
+                            <li>Agregar README (recomendado)</li>
+                        </ul>
+                    </li>
+                    <li>Click en <strong>"Create repository"</strong></li>
+                </ol>
+                
+                <h3 style="margin-top: 30px;">Forkear un repositorio:</h3>
+                <ol>
+                    <li>Ir al repositorio que quieres forkear</li>
+                    <li>Click en el botón <strong>"Fork"</strong> arriba a la derecha</li>
+                    <li>Se creará una copia en tu cuenta</li>
+                </ol>
+                
+                <p style="margin-top: 20px;"><strong>Fork:</strong> Copia un proyecto para modificarlo sin afectar el original.</p>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <h2>Iniciar Sesión en GitHub - Windows 11</h2>
+            <div class="content">
+                <h3>Opción 1: GitHub CLI (Recomendado)</h3>
+                <ol>
+                    <li>Descargar GitHub CLI desde <span class="highlight">cli.github.com</span></li>
+                    <li>Instalar el programa</li>
+                    <li>Abrir PowerShell o CMD</li>
+                    <li>Ejecutar:</li>
+                </ol>
+                <div class="code-block">gh auth login</div>
+                <ol start="5">
+                    <li>Seguir instrucciones: GitHub.com → HTTPS → Login con navegador</li>
+                    <li>Se abrirá el navegador para autenticar</li>
+                </ol>
+                
+                <h3 style="margin-top: 30px;">Opción 2: Git Credential Manager</h3>
+                <ol>
+                    <li>Al hacer <code>git push</code> por primera vez</li>
+                    <li>Se abrirá ventana para autenticar</li>
+                    <li>Ingresar credenciales de GitHub</li>
+                    <li>Se guardan automáticamente</li>
+                </ol>
+                
+                <h3 style="margin-top: 20px;">Opción 3: Personal Access Token</h3>
+                <ol>
+                    <li>GitHub → Settings → Developer settings → Tokens</li>
+                    <li>Generate new token</li>
+                    <li>Usar el token como contraseña</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <h2>Iniciar Sesión en GitHub - Mac</h2>
+            <div class="content">
+                <h3>Opción 1: GitHub CLI (Recomendado)</h3>
+                <ol>
+                    <li>Instalar Homebrew (si no lo tienes):</li>
+                </ol>
+                <div class="code-block">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/<br>Homebrew/install/HEAD/install.sh)"</div>
+                
+                <ol start="2">
+                    <li>Instalar GitHub CLI:</li>
+                </ol>
+                <div class="code-block">brew install gh</div>
+                
+                <ol start="3">
+                    <li>Autenticar:</li>
+                </ol>
+                <div class="code-block">gh auth login</div>
+                
+                <h3 style="margin-top: 30px;">Opción 2: SSH Keys</h3>
+                <div class="code-block">ssh-keygen -t ed25519 -C "tu@email.com"<br>cat ~/.ssh/id_ed25519.pub</div>
+                
+                <ol>
+                    <li>Copiar la clave pública</li>
+                    <li>GitHub → Settings → SSH and GPG keys → New SSH key</li>
+                    <li>Pegar la clave y guardar</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide">
+            <h2>GitHub con VSCode - Windows</h2>
+            <div class="content">
+                <h3>Paso a paso:</h3>
+                <ol>
+                    <li>Abrir <strong>Visual Studio Code</strong></li>
+                    <li>Click en el ícono de <strong>Source Control</strong></li>
+                    <li>Click en <strong>"Sign in to sync settings"</strong></li>
+                    <li>Seleccionar <strong>"Sign in with GitHub"</strong></li>
+                    <li>Se abrirá el navegador para autenticar</li>
+                    <li>Autorizar Visual Studio Code</li>
+                    <li>Volver a VSCode - ya estás conectado</li>
+                </ol>
+                
+                <h3 style="margin-top: 30px;">Instalar extensión:</h3>
+                <ol>
+                    <li>Extensions (Ctrl+Shift+X)</li>
+                    <li>Buscar "GitHub Pull Requests and Issues"</li>
+                    <li>Instalar la extensión oficial de GitHub</li>
+                </ol>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>✅ Ventaja:</strong> Con VSCode sincronizado, puedes hacer push/pull directamente desde la interfaz gráfica.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <h2>Usar Git con VSCode</h2>
+            <div class="content">
+                <h3>Interfaz de Source Control:</h3>
+                <ul>
+                    <li><strong>Abrir carpeta:</strong> File → Open Folder</li>
+                    <li><strong>Inicializar Git:</strong> Source Control → Initialize Repository</li>
+                    <li><strong>Ver cambios:</strong> Archivos modificados aparecen automáticamente</li>
+                </ul>
+                
+                <h3 style="margin-top: 20px;">Operaciones comunes:</h3>
+                
+                <p><strong>1. Hacer Commit:</strong></p>
+                <ul>
+                    <li>Click en "+" para Stage (git add)</li>
+                    <li>Escribir mensaje arriba</li>
+                    <li>Click en "✓" o Ctrl+Enter</li>
+                </ul>
+                
+                <p style="margin-top: 15px;"><strong>2. Push y Pull:</strong></p>
+                <ul>
+                    <li>Click en "..." (más opciones)</li>
+                    <li>Push → Enviar cambios</li>
+                    <li>Pull → Traer cambios</li>
+                </ul>
+                
+                <p style="margin-top: 15px;"><strong>3. Cambiar de rama:</strong></p>
+                <ul>
+                    <li>Click en nombre de rama (abajo izquierda)</li>
+                    <li>Seleccionar o crear nueva rama</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 13 -->
+        <div class="slide">
+            <h2>Cómo Clonar un Repositorio</h2>
+            <div class="content">
+                <h3>Método 1: Línea de comandos</h3>
+                <ol>
+                    <li>Ir al repositorio en GitHub</li>
+                    <li>Click en botón verde <strong>"Code"</strong></li>
+                    <li>Copiar URL (HTTPS o SSH)</li>
+                    <li>En terminal:</li>
+                </ol>
+                <div class="code-block">cd /ruta/donde/quieres/clonar<br>git clone https://github.com/usuario/repositorio.git</div>
+                
+                <h3 style="margin-top: 30px;">Método 2: VSCode</h3>
+                <ol>
+                    <li>Abrir VSCode</li>
+                    <li>Ctrl+Shift+P (Command Palette)</li>
+                    <li>Escribir "Git: Clone"</li>
+                    <li>Pegar URL del repositorio</li>
+                    <li>Seleccionar carpeta destino</li>
+                    <li>Abrir el repositorio clonado</li>
+                </ol>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>✅ Resultado:</strong> Se descarga todo el proyecto con su historial completo.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14 -->
+        <div class="slide">
+            <h2>Comandos: add y commit</h2>
+            <div class="content">
+                <h3>git add - Preparar cambios</h3>
+                <div class="code-block">git add archivo.txt           # Agregar archivo específico<br>git add .                     # Agregar todos los cambios<br>git add *.js                  # Agregar archivos .js<br>git add carpeta/              # Agregar carpeta</div>
+                
+                <p style="margin-top: 15px;"><strong>¿Qué hace?</strong> Mueve archivos al Staging Area.</p>
+                
+                <h3 style="margin-top: 30px;">git commit - Guardar cambios</h3>
+                <div class="code-block">git commit -m "Mensaje descriptivo"<br>git commit -m "Fix: Corregir error en login"<br>git commit -m "Feature: Agregar botón de búsqueda"</div>
+                
+                <p style="margin-top: 15px;"><strong>¿Qué hace?</strong> Crea un snapshot permanente de los cambios.</p>
+                
+                <div class="warning" style="margin-top: 20px;">
+                    <strong>⚠️ Importante:</strong> Escribe mensajes claros y descriptivos.
+                </div>
+                
+                <h3 style="margin-top: 20px;">Ejemplo:</h3>
+                <div class="code-block">git status<br>git add index.html<br>git commit -m "Update homepage layout"</div>
+            </div>
+        </div>
+
+        <!-- Slide 15 -->
+        <div class="slide">
+            <h2>Comandos: push y pull</h2>
+            <div class="content">
+                <h3>git push - Enviar al remoto</h3>
+                <div class="code-block">git push                      # Push a la rama actual<br>git push origin main          # Push a rama main<br>git push origin feature       # Push a rama específica<br>git push -u origin main       # Primera vez</div>
+                
+                <p style="margin-top: 15px;"><strong>¿Qué hace?</strong> Sube tus commits a GitHub.</p>
+                
+                <h3 style="margin-top: 30px;">git pull - Traer del remoto</h3>
+                <div class="code-block">git pull                      # Traer cambios<br>git pull origin main          # Traer de main</div>
+                
+                <p style="margin-top: 15px;"><strong>¿Qué hace?</strong> Descarga cambios de GitHub.</p>
+                
+                <div class="warning" style="margin-top: 20px;">
+                    <strong>⚠️ Tip:</strong> Siempre haz <code>git pull</code> antes de trabajar.
+                </div>
+                
+                <h3 style="margin-top: 20px;">Flujo típico:</h3>
+                <div class="code-block">git pull<br>... hacer cambios ...<br>git add .<br>git commit -m "Mensaje"<br>git push</div>
+            </div>
+        </div>
+
+        <!-- Slide 16 -->
+        <div class="slide">
+            <h2>Comando: checkout</h2>
+            <div class="content">
+                <h3>git checkout - Cambiar rama o restaurar</h3>
+                
+                <p><strong>1. Cambiar de rama:</strong></p>
+                <div class="code-block">git checkout main             # Cambiar a main<br>git checkout feature-login    # Cambiar a otra rama<br>git checkout -b nueva-rama    # Crear Y cambiar</div>
+                
+                <p style="margin-top: 20px;"><strong>2. Restaurar archivo:</strong></p>
+                <div class="code-block">git checkout -- archivo.txt   # Descartar cambios<br>git checkout HEAD archivo.txt # Restaurar última versión</div>
+                
+                <p style="margin-top: 20px;"><strong>3. Ver commit antiguo:</strong></p>
+                <div class="code-block">git checkout abc1234          # Ir a commit específico</div>
+                
+                <div class="warning" style="margin-top: 20px;">
+                    <strong>⚠️ Nota:</strong> Git ahora recomienda comandos más claros:
+                </div>
+                
+                <h3 style="margin-top: 20px;">Alternativas modernas:</h3>
+                <div class="code-block">git switch main               # Cambiar rama<br>git switch -c nueva-rama      # Crear y cambiar<br>git restore archivo.txt       # Restaurar archivo</div>
+            </div>
+        </div>
+
+        <!-- Slide 17 -->
+        <div class="slide">
+            <h2>Comando: merge</h2>
+            <div class="content">
+                <h3>git merge - Fusionar ramas</h3>
+                <p>Integra los cambios de una rama en otra.</p>
+                
+                <div class="diagram">
+                    <p>main: ●━━●━━●━━●</p>
+                    <p style="margin: 10px 0;">feature: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;╰━●━●╮</p>
+                    <p>main: ●━━●━━●━━●━━●</p>
+                    <p style="margin-top: 10px; color: #ffd700;">Después del merge ↑</p>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Ejemplo práctico:</h3>
+                <div class="code-block"># Terminaste en feature-login<br>git checkout main             # Ir a main<br>git pull                      # Actualizar<br>git merge feature-login       # Fusionar<br>git push                      # Subir</div>
+                
+                <h3 style="margin-top: 30px;">Tipos de merge:</h3>
+                <ul>
+                    <li><strong>Fast-forward:</strong> Sin conflictos</li>
+                    <li><strong>Three-way merge:</strong> Crea commit de merge</li>
+                </ul>
+                
+                <div class="warning" style="margin-top: 20px;">
+                    <strong>⚠️ Conflictos:</strong> Si hay conflictos, debes resolverlos manualmente.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18 -->
+        <div class="slide">
+            <h2>Comando: rebase</h2>
+            <div class="content">
+                <h3>git rebase - Reescribir historial</h3>
+                <p>Mueve commits de una rama sobre otra, creando historial lineal.</p>
+                
+                <div class="diagram">
+                    <p style="font-size: 0.9em;">ANTES del rebase:</p>
+                    <p>main: ●━━●━━●━━●</p>
+                    <p style="margin: 10px 0;">feature: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;╰━●━●</p>
+                    <p style="margin-top: 20px; font-size: 0.9em;">DESPUÉS del rebase:</p>
+                    <p>main: ●━━●━━●━━●━●━●</p>
+                    <p style="margin-top: 10px; color: #ffd700;">Historial lineal ↑</p>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Ejemplo:</h3>
+                <div class="code-block"># Estás en feature-login<br>git checkout feature-login<br>git rebase main              # Mover sobre main<br>git push --force             # Forzar push</div>
+                
+                <h3 style="margin-top: 30px;">Merge vs Rebase:</h3>
+                <ul>
+                    <li><strong>Merge:</strong> Preserva historial completo</li>
+                    <li><strong>Rebase:</strong> Historial limpio y lineal</li>
+                </ul>
+                
+                <div class="warning" style="margin-top: 20px;">
+                    <strong>⚠️ REGLA DE ORO:</strong> NUNCA hagas rebase en ramas públicas compartidas. Solo en ramas personales.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19 -->
+        <div class="slide">
+            <h2>Resolver Conflictos</h2>
+            <div class="content">
+                <h3>¿Cuándo ocurre un conflicto?</h3>
+                <p>Cuando dos ramas modifican las mismas líneas.</p>
+                
+                <h3 style="margin-top: 20px;">Ejemplo de conflicto:</h3>
+                <div class="code-block"><<<<<<< HEAD<br>const nombre = "Juan";<br>=======<br>const nombre = "María";<br>>>>>>>> feature-branch</div>
+                
+                <h3 style="margin-top: 20px;">Pasos para resolver:</h3>
+                <ol>
+                    <li>Git marca el conflicto al hacer merge/rebase</li>
+                    <li>Abrir archivo(s) conflictivos</li>
+                    <li>Buscar marcadores</li>
+                    <li>Decidir qué versión mantener</li>
+                    <li>Eliminar los marcadores</li>
+                    <li>Guardar el archivo</li>
+                    <li>Hacer commit:</li>
+                </ol>
+                <div class="code-block">git add archivo.js<br>git commit -m "Resolve merge conflict"</div>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>✅ Tip VSCode:</strong> VSCode detecta conflictos y ofrece botones para resolverlos fácilmente.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20 -->
+        <div class="slide">
+            <h2>Ejemplo Práctico 1: Proyecto Nuevo</h2>
+            <div class="content">
+                <h3>Crear proyecto y subirlo a GitHub:</h3>
+                
+                <div class="code-block"># 1. Crear carpeta<br>mkdir mi-proyecto<br>cd mi-proyecto<br><br># 2. Inicializar Git<br>git init<br><br># 3. Crear archivos<br>echo "# Mi Proyecto" > README.md<br>echo "console.log('Hola');" > app.js<br><br># 4. Primer commit<br>git add .<br>git commit -m "Initial commit"<br><br># 5. Conectar con GitHub<br>git remote add origin https://github.com/usuario/mi-proyecto.git<br><br># 6. Subir a GitHub<br>git push -u origin main</div>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>✅ Resultado:</strong> Proyecto creado localmente y respaldado en GitHub.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21 -->
+        <div class="slide">
+            <h2>Ejemplo Práctico 2: Trabajar con Ramas</h2>
+            <div class="content">
+                <h3>Agregar funcionalidad en rama separada:</h3>
+                
+                <div class="code-block"># 1. Actualizar main<br>git checkout main<br>git pull<br><br># 2. Crear rama<br>git checkout -b feature-boton-busqueda<br><br># 3. Hacer cambios<br>... editar código ...<br><br># 4. Commit<br>git add .<br>git commit -m "Add search button"<br><br># 5. Subir rama<br>git push -u origin feature-boton-busqueda<br><br># 6. Crear Pull Request en GitHub<br><br># 7. Después de aprobar, fusionar<br>git checkout main<br>git pull<br><br># 8. Eliminar rama local<br>git branch -d feature-boton-busqueda</div>
+            </div>
+        </div>
+
+        <!-- Slide 22 -->
+        <div class="slide">
+            <h2>Ejemplo Práctico 3: Colaboración</h2>
+            <div class="content">
+                <h3>Contribuir a proyecto de otra persona:</h3>
+                
+                <div class="code-block"># 1. Fork en GitHub (botón Fork)<br><br># 2. Clonar TU fork<br>git clone https://github.com/tu-usuario/proyecto.git<br>cd proyecto<br><br># 3. Agregar repo original como upstream<br>git remote add upstream https://github.com/original/proyecto.git<br><br># 4. Crear rama<br>git checkout -b fix-typo-readme<br><br># 5. Hacer cambios<br>... editar ...<br><br># 6. Commit y push<br>git add .<br>git commit -m "Fix typo in README"<br>git push origin fix-typo-readme<br><br># 7. Crear Pull Request en GitHub<br><br># 8. Mantener fork actualizado<br>git fetch upstream<br>git checkout main<br>git merge upstream/main<br>git push origin main</div>
+            </div>
+        </div>
+
+        <!-- Slide 23 -->
+        <div class="slide">
+            <h2>Comandos Útiles Adicionales</h2>
+            <div class="content">
+                <h3>Gestión de ramas:</h3>
+                <div class="code-block">git branch                    # Listar ramas locales<br>git branch -a                 # Listar todas<br>git branch -d feature-x       # Eliminar local<br>git push origin --delete rama # Eliminar remota</div>
+                
+                <h3>Ver información:</h3>
+                <div class="code-block">git status                    # Estado actual<br>git log --oneline --graph     # Historial visual<br>git diff                      # Ver cambios<br>git show abc1234              # Ver commit específico</div>
+                
+                <h3>Deshacer cambios:</h3>
+                <div class="code-block">git reset HEAD archivo.txt    # Quitar de staging<br>git reset --soft HEAD~1       # Deshacer commit<br>git reset --hard HEAD~1       # PERDER cambios<br>git revert abc1234            # Revertir commit</div>
+                
+                <h3>Stash (guardar temporalmente):</h3>
+                <div class="code-block">git stash                     # Guardar cambios<br>git stash pop                 # Recuperar<br>git stash list                # Ver lista</div>
+            </div>
+        </div>
+
+        <!-- Slide 24 -->
+        <div class="slide">
+            <h2>Buenas Prácticas con Git</h2>
+            <div class="content">
+                <h3>📝 Commits:</h3>
+                <ul>
+                    <li>Commits pequeños y atómicos</li>
+                    <li>Mensajes claros y descriptivos</li>
+                    <li>Usar presente: "Add feature" no "Added"</li>
+                    <li>Prefijos: "Fix:", "Feature:", "Docs:"</li>
+                </ul>
+                
+                <h3 style="margin-top: 20px;">🌿 Ramas:</h3>
+                <ul>
+                    <li>main → código estable</li>
+                    <li>develop → integración</li>
+                    <li>feature/nombre → funcionalidades</li>
+                    <li>bugfix/nombre → correcciones</li>
+                    <li>hotfix/nombre → arreglos urgentes</li>
+                </ul>
+                
+                <h3 style="margin-top: 20px;">🔄 Workflow:</h3>
+                <ul>
+                    <li>Siempre <code>git pull</code> antes de trabajar</li>
+                    <li><code>git status</code> frecuentemente</li>
+                    <li>Commits frecuentes</li>
+                    <li>Push al menos una vez al día</li>
+                </ul>
+                
+                <h3 style="margin-top: 20px;">📄 .gitignore:</h3>
+                <div class="code-block">node_modules/<br>.env<br>*.log<br>.DS_Store<br>dist/</div>
+            </div>
+        </div>
+
+        <!-- Slide 25 -->
+        <div class="slide">
+            <h2>Recursos y Próximos Pasos</h2>
+            <div class="content">
+                <h3>📚 Recursos para aprender más:</h3>
+                <ul>
+                    <li><strong>Documentación oficial:</strong> git-scm.com/doc</li>
+                    <li><strong>GitHub Learning Lab:</strong> lab.github.com</li>
+                    <li><strong>Visualizador interactivo:</strong> learngitbranching.js.org</li>
+                    <li><strong>Git Cheat Sheet:</strong> education.github.com</li>
+                </ul>
+                
+                <h3 style="margin-top: 30px;">🎯 Próximos pasos:</h3>
+                <ol>
+                    <li>Crear tu cuenta en GitHub</li>
+                    <li>Configurar Git en tu computadora</li>
+                    <li>Crear tu primer repositorio</li>
+                    <li>Practicar: add, commit, push, pull</li>
+                    <li>Experimentar con ramas</li>
+                    <li>Contribuir a proyectos open source</li>
+                </ol>
+                
+                <div class="success" style="margin-top: 30px;">
+                    <strong>💡 Recuerda:</strong> Git parece complicado al principio, pero con práctica diaria se vuelve natural. ¡No tengas miedo de experimentar!
+                </div>
+                
+                <p style="margin-top: 30px; text-align: center; font-size: 1.5em;">
+                    <span class="highlight">¡Feliz versionado! 🚀</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 26: GitHub Pages - Introducción -->
+        <div class="slide">
+            <h2>GitHub Pages - Hosting Gratuito</h2>
+            <div class="content">
+                <h3>¿Qué es GitHub Pages?</h3>
+                <p style="font-size: 1.3em;">Servicio <span class="highlight">gratuito</span> de GitHub para hospedar sitios web estáticos directamente desde un repositorio.</p>
+                
+                <h3 style="margin-top: 30px;">✅ Ventajas:</h3>
+                <ul>
+                    <li><strong>100% Gratuito</strong> - Sin costos ocultos</li>
+                    <li><strong>HTTPS automático</strong> - Certificado SSL incluido</li>
+                    <li><strong>Dominio incluido:</strong> usuario.github.io</li>
+                    <li><strong>Deploy automático</strong> - Push y actualiza</li>
+                    <li><strong>Ancho de banda:</strong> 100GB/mes</li>
+                    <li><strong>Custom domain</strong> - Conecta tu propio dominio</li>
+                </ul>
+                
+                <h3 style="margin-top: 30px;">📋 Perfecto para:</h3>
+                <ul>
+                    <li>Portafolios personales</li>
+                    <li>Landing pages</li>
+                    <li>Documentación de proyectos</li>
+                    <li>Blogs estáticos</li>
+                    <li>Proyectos HTML/CSS/JS</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 27: Requisitos y limitaciones -->
+        <div class="slide">
+            <h2>GitHub Pages - Requisitos</h2>
+            <div class="content">
+                <h3>✅ Lo que SÍ puedes hacer:</h3>
+                <ul>
+                    <li><strong>HTML, CSS, JavaScript</strong> - Frontend completo</li>
+                    <li><strong>Frameworks frontend:</strong> React, Vue, Angular (build)</li>
+                    <li><strong>Generadores estáticos:</strong> Jekyll, Hugo, Gatsby</li>
+                    <li><strong>Sitios SPA</strong> - Single Page Applications</li>
+                    <li><strong>APIs externas</strong> - Consumir desde JavaScript</li>
+                </ul>
+                
+                <h3 style="margin-top: 30px;">❌ Lo que NO puedes hacer:</h3>
+                <ul>
+                    <li><strong>Backend:</strong> Node.js, PHP, Python, Ruby</li>
+                    <li><strong>Bases de datos:</strong> MySQL, MongoDB, PostgreSQL</li>
+                    <li><strong>Procesamiento servidor:</strong> No hay servidor</li>
+                    <li><strong>Uploads de archivos</strong> - Solo archivos estáticos</li>
+                </ul>
+                
+                <h3 style="margin-top: 30px;">📏 Límites:</h3>
+                <ul>
+                    <li>Tamaño del repo: Recomendado < 1GB</li>
+                    <li>Tamaño del sitio: < 1GB</li>
+                    <li>Ancho de banda: 100GB/mes (soft limit)</li>
+                    <li>Builds: 10 por hora</li>
+                </ul>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>💡 Tip:</strong> Para 99% de sitios personales, estos límites son más que suficientes.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 28: Tipos de GitHub Pages -->
+        <div class="slide">
+            <h2>Tipos de GitHub Pages</h2>
+            <div class="content">
+                <h3>1. User/Organization Site (Sitio principal)</h3>
+                <div class="code-block">Nombre del repo: usuario.github.io<br>URL: https://usuario.github.io</div>
+                <ul>
+                    <li>Un sitio por cuenta</li>
+                    <li>Perfecto para portafolio personal</li>
+                    <li>Se publica desde rama main</li>
+                </ul>
+                
+                <h3 style="margin-top: 30px;">2. Project Sites (Sitios de proyecto)</h3>
+                <div class="code-block">Nombre del repo: cualquier-nombre<br>URL: https://usuario.github.io/cualquier-nombre</div>
+                <ul>
+                    <li>Ilimitados sitios de proyecto</li>
+                    <li>Cada repositorio puede tener su sitio</li>
+                    <li>Ideal para documentación o demos</li>
+                </ul>
+                
+                <h3 style="margin-top: 30px;">Opciones de rama:</h3>
+                <ul>
+                    <li><strong>main (root):</strong> Desde la raíz del repo</li>
+                    <li><strong>main (/docs):</strong> Desde carpeta /docs</li>
+                    <li><strong>gh-pages:</strong> Rama dedicada para el sitio</li>
+                </ul>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>✅ Recomendación:</strong> Usa usuario.github.io para tu portafolio principal, y project sites para cada proyecto.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 29: Ejemplo práctico - Configurar GitHub Pages -->
+        <div class="slide">
+            <h2>Ejemplo: Publicar tu Primera Página</h2>
+            <div class="content">
+                <h3>Paso a paso completo:</h3>
+                
+                <p><strong>1. Crear repositorio en GitHub:</strong></p>
+                <ul>
+                    <li>Nombre: <code>mi-sitio-web</code> (o lo que quieras)</li>
+                    <li>Público</li>
+                    <li>Con README (opcional)</li>
+                </ul>
+                
+                <p style="margin-top: 15px;"><strong>2. Crear archivos localmente:</strong></p>
+                <div class="code-block">mkdir mi-sitio-web<br>cd mi-sitio-web<br>git init</div>
+                
+                <p style="margin-top: 15px;"><strong>3. Crear index.html básico:</strong></p>
+                <div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html lang="es"&gt;<br>&lt;head&gt;<br>    &lt;meta charset="UTF-8"&gt;<br>    &lt;title&gt;Mi Primera Página&lt;/title&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>    &lt;h1&gt;¡Hola Mundo!&lt;/h1&gt;<br>    &lt;p&gt;Mi sitio en GitHub Pages&lt;/p&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;</div>
+                
+                <p style="margin-top: 15px;"><strong>4. Subir a GitHub:</strong></p>
+                <div class="code-block">git add .<br>git commit -m "Initial commit"<br>git remote add origin https://github.com/usuario/mi-sitio-web.git<br>git push -u origin main</div>
+            </div>
+        </div>
+
+        <!-- Slide 30: Activar GitHub Pages -->
+        <div class="slide">
+            <h2>Activar GitHub Pages</h2>
+            <div class="content">
+                <h3>Pasos en GitHub.com:</h3>
+                
+                <ol>
+                    <li>Ir a tu repositorio en GitHub</li>
+                    <li>Click en <strong>Settings</strong> (⚙️)</li>
+                    <li>Scroll down hasta <strong>Pages</strong> (en menú lateral)</li>
+                    <li>En <strong>Source</strong>:
+                        <ul>
+                            <li>Branch: <code>main</code></li>
+                            <li>Folder: <code>/ (root)</code></li>
+                        </ul>
+                    </li>
+                    <li>Click en <strong>Save</strong></li>
+                    <li>Esperar 1-2 minutos</li>
+                    <li>¡Tu sitio estará en <code>usuario.github.io/mi-sitio-web</code>!</li>
+                </ol>
+                
+                <div class="success" style="margin-top: 30px;">
+                    <strong>✅ ¡Listo!</strong> Cada vez que hagas push a main, tu sitio se actualizará automáticamente.
+                </div>
+                
+                <div class="diagram" style="margin-top: 20px;">
+                    <p style="color: #4CAF50;">git push → GitHub detecta cambios → Build automático → Sitio actualizado (1-2 min)</p>
+                </div>
+                
+                <div class="warning" style="margin-top: 20px;">
+                    <strong>⚠️ Nota:</strong> La primera vez puede tardar hasta 10 minutos. Siguientes actualizaciones son más rápidas.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 31: Ejemplo completo con estilos -->
+        <div class="slide">
+            <h2>Ejemplo: Sitio con CSS</h2>
+            <div class="content">
+                <h3>Estructura de archivos:</h3>
+                <div class="code-block">mi-sitio-web/<br>├── index.html<br>├── style.css<br>└── README.md</div>
+                
+                <h3 style="margin-top: 20px;">index.html:</h3>
+                <div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html lang="es"&gt;<br>&lt;head&gt;<br>    &lt;meta charset="UTF-8"&gt;<br>    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br>    &lt;title&gt;Mi Portafolio&lt;/title&gt;<br>    &lt;link rel="stylesheet" href="style.css"&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>    &lt;header&gt;<br>        &lt;h1&gt;Juan Pérez&lt;/h1&gt;<br>        &lt;p&gt;Desarrollador Web&lt;/p&gt;<br>    &lt;/header&gt;<br>    &lt;main&gt;<br>        &lt;h2&gt;Proyectos&lt;/h2&gt;<br>        &lt;p&gt;Próximamente...&lt;/p&gt;<br>    &lt;/main&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;</div>
+                
+                <h3 style="margin-top: 20px;">style.css:</h3>
+                <div class="code-block">body {<br>    font-family: Arial, sans-serif;<br>    max-width: 800px;<br>    margin: 0 auto;<br>    padding: 20px;<br>}<br><br>header {<br>    text-align: center;<br>    padding: 40px 0;<br>}</div>
+            </div>
+        </div>
+
+        <!-- Slide 32: Dominio personalizado -->
+        <div class="slide">
+            <h2>Dominio Personalizado (Opcional)</h2>
+            <div class="content">
+                <h3>¿Quieres usar www.tusitio.com?</h3>
+                <p>Puedes conectar tu propio dominio a GitHub Pages gratuitamente.</p>
+                
+                <h3 style="margin-top: 30px;">Pasos:</h3>
+                <ol>
+                    <li><strong>Comprar dominio</strong> (en Namecheap, GoDaddy, etc.)</li>
+                    <li>En GitHub Pages Settings:
+                        <ul>
+                            <li>Agregar tu dominio en "Custom domain"</li>
+                            <li>Activar "Enforce HTTPS"</li>
+                        </ul>
+                    </li>
+                    <li>En tu proveedor de dominio, configurar DNS:
+                        <ul>
+                            <li>Tipo A: Apuntar a IPs de GitHub</li>
+                            <li>O CNAME: Apuntar a usuario.github.io</li>
+                        </ul>
+                    </li>
+                    <li>Esperar propagación DNS (24-48 horas)</li>
+                </ol>
+                
+                <h3 style="margin-top: 30px;">IPs de GitHub Pages:</h3>
+                <div class="code-block">185.199.108.153<br>185.199.109.153<br>185.199.110.153<br>185.199.111.153</div>
+                
+                <div class="success" style="margin-top: 20px;">
+                    <strong>✅ Resultado:</strong> Tu sitio estará en www.tusitio.com con HTTPS gratis.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button onclick="previousSlide()">← Anterior</button>
+        <button onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+    </script>
+</body>
+</html>
