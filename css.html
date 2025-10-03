@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a CSS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            color: white;
+            text-align: center;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 950px;
+            text-align: left;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .content h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+        
+        .content p, .content li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .content ul {
+            list-style-position: inside;
+            margin-left: 20px;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            text-align: left;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        
+        .example-box {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        button {
+            padding: 15px 35px;
+            font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.2em;
+        }
+        
+        .highlight {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .box-model-demo {
+            background: #4CAF50;
+            padding: 20px;
+            border: 5px solid #FF5722;
+            margin: 20px;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">18</span>
+        </div>
+
+        <!-- Slide 1: Título -->
+        <div class="slide active">
+            <h1>Introducción a CSS</h1>
+            <p style="font-size: 1.5em; margin-top: 20px;">Cascading Style Sheets</p>
+            <p style="font-size: 1.2em; margin-top: 10px;">El lenguaje que da estilo a la web</p>
+        </div>
+
+        <!-- Slide 2: ¿Qué es CSS? -->
+        <div class="slide">
+            <h2>¿Qué significa CSS y para qué sirve?</h2>
+            <div class="content">
+                <p><span class="highlight">CSS</span> significa <span class="highlight">Cascading Style Sheets</span> (Hojas de Estilo en Cascada)</p>
+                
+                <h3 style="margin-top: 30px;">¿Para qué sirve?</h3>
+                <ul>
+                    <li><strong>Controlar la presentación visual</strong> de las páginas web</li>
+                    <li><strong>Separar contenido de diseño:</strong> HTML estructura, CSS decora</li>
+                    <li><strong>Aplicar estilos:</strong> colores, fuentes, tamaños, espaciados</li>
+                    <li><strong>Crear layouts:</strong> distribución y posicionamiento</li>
+                    <li><strong>Responsive design:</strong> adaptar a diferentes dispositivos</li>
+                </ul>
+                
+                <p style="margin-top: 20px; font-size: 1.3em;">Sin CSS, todas las páginas web serían texto plano sin formato.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Relación HTML-CSS -->
+        <div class="slide">
+            <h2>¿Cómo se relaciona CSS con HTML?</h2>
+            <div class="content">
+                <div class="two-columns">
+                    <div>
+                        <h3>HTML</h3>
+                        <p>🏗️ <strong>Estructura</strong></p>
+                        <p>Define QUÉ es cada elemento</p>
+                        <div class="code-block">&lt;h1&gt;Título&lt;/h1&gt;<br>&lt;p&gt;Párrafo&lt;/p&gt;</div>
+                    </div>
+                    <div>
+                        <h3>CSS</h3>
+                        <p>🎨 <strong>Presentación</strong></p>
+                        <p>Define CÓMO se ve</p>
+                        <div class="code-block">h1 {<br>  color: blue;<br>  font-size: 32px;<br>}</div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 30px; font-size: 1.3em; text-align: center;">HTML es el <span class="highlight">esqueleto</span>, CSS es la <span class="highlight">ropa y maquillaje</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Tres formas de usar CSS -->
+        <div class="slide">
+            <h2>Tres Formas de Usar CSS</h2>
+            <div class="content">
+                <h3>1. CSS Inline (en línea)</h3>
+                <div class="code-block">&lt;p style="color: red; font-size: 20px;"&gt;Texto rojo&lt;/p&gt;</div>
+                
+                <h3>2. CSS Interno (dentro de &lt;style&gt;)</h3>
+                <div class="code-block">&lt;head&gt;<br>  &lt;style&gt;<br>    p { color: red; }<br>  &lt;/style&gt;<br>&lt;/head&gt;</div>
+                
+                <h3>3. CSS Externo (archivo separado)</h3>
+                <div class="code-block">&lt;head&gt;<br>  &lt;link rel="stylesheet" href="estilos.css"&gt;<br>&lt;/head&gt;</div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Ejemplos de las tres formas -->
+        <div class="slide">
+            <h2>Ejemplos Claros de Cada Método</h2>
+            <div class="content">
+                <h3>❌ CSS Inline - No recomendado</h3>
+                <div class="code-block">&lt;h1 style="color: blue; text-align: center;"&gt;Título&lt;/h1&gt;<br>&lt;p style="color: gray; font-size: 18px;"&gt;Párrafo&lt;/p&gt;</div>
+                <p><strong>Problema:</strong> Difícil de mantener, mezcla HTML con CSS</p>
+                
+                <h3>✅ CSS Interno - Para páginas pequeñas</h3>
+                <div class="code-block">&lt;style&gt;<br>  h1 { color: blue; text-align: center; }<br>  p { color: gray; font-size: 18px; }<br>&lt;/style&gt;</div>
+                
+                <h3>✅✅ CSS Externo - Mejor práctica</h3>
+                <div class="code-block">/* Archivo: estilos.css */<br>h1 { color: blue; text-align: center; }<br>p { color: gray; font-size: 18px; }</div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cómo conectar CSS -->
+        <div class="slide">
+            <h2>Cómo Conectar CSS con HTML</h2>
+            <div class="content">
+                <h3>Estructura de archivos:</h3>
+                <div class="code-block">mi-proyecto/<br>├── index.html<br>└── estilos.css</div>
+                
+                <h3>En el archivo HTML:</h3>
+                <div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>  &lt;meta charset="UTF-8"&gt;<br>  &lt;title&gt;Mi Página&lt;/title&gt;<br>  &lt;link rel="stylesheet" href="estilos.css"&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>  &lt;h1&gt;Hola Mundo&lt;/h1&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;</div>
+                
+                <p style="margin-top: 20px;"><span class="highlight">rel="stylesheet"</span> indica que es una hoja de estilos</p>
+                <p><span class="highlight">href="estilos.css"</span> es la ruta al archivo CSS</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Lógica selector-propiedad-valor -->
+        <div class="slide">
+            <h2>Lógica: Selector, Propiedad y Valor</h2>
+            <div class="content">
+                <h3>Sintaxis básica de CSS:</h3>
+                <div class="code-block">selector {<br>  propiedad: valor;<br>  propiedad: valor;<br>}</div>
+                
+                <h3>Ejemplo real:</h3>
+                <div class="code-block">h1 {<br>  color: blue;<br>  font-size: 36px;<br>  text-align: center;<br>}</div>
+                
+                <ul style="margin-top: 20px;">
+                    <li><span class="highlight">Selector (h1):</span> ¿A QUÉ elemento aplicar?</li>
+                    <li><span class="highlight">Propiedad (color, font-size):</span> ¿QUÉ cambiar?</li>
+                    <li><span class="highlight">Valor (blue, 36px):</span> ¿CÓMO cambiarlo?</li>
+                </ul>
+                
+                <p style="margin-top: 20px;">Cada declaración termina con <span class="highlight">punto y coma (;)</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Selectores de HTML -->
+        <div class="slide">
+            <h2>Selectores de Etiquetas HTML</h2>
+            <div class="content">
+                <p>Seleccionan <strong>todas</strong> las etiquetas del mismo tipo.</p>
+                
+                <h3>CSS:</h3>
+                <div class="code-block">p {<br>  color: green;<br>  font-size: 16px;<br>}<br><br>h1 {<br>  color: navy;<br>  font-weight: bold;<br>}<br><br>a {<br>  color: red;<br>  text-decoration: none;<br>}</div>
+                
+                <p style="margin-top: 20px;">Esto afectará a <span class="highlight">TODOS</span> los &lt;p&gt;, &lt;h1&gt; y &lt;a&gt; del documento.</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Selectores de class -->
+        <div class="slide">
+            <h2>Selectores de Clase (.class)</h2>
+            <div class="content">
+                <p>Las clases se pueden <strong>reutilizar</strong> en múltiples elementos.</p>
+                
+                <h3>HTML:</h3>
+                <div class="code-block">&lt;p class="destacado"&gt;Párrafo importante&lt;/p&gt;<br>&lt;p&gt;Párrafo normal&lt;/p&gt;<br>&lt;div class="destacado"&gt;División importante&lt;/div&gt;</div>
+                
+                <h3>CSS:</h3>
+                <div class="code-block">.destacado {<br>  background-color: yellow;<br>  font-weight: bold;<br>  padding: 10px;<br>}</div>
+                
+                <p style="margin-top: 20px;"><span class="highlight">Nota:</span> Las clases se escriben con un <span class="highlight">punto (.)</span> en CSS</p>
+                <p>Múltiples elementos pueden tener la misma clase</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Selectores de id -->
+        <div class="slide">
+            <h2>Selectores de ID (#id)</h2>
+            <div class="content">
+                <p>Los IDs son <strong>únicos</strong>, solo deben usarse una vez por página.</p>
+                
+                <h3>HTML:</h3>
+                <div class="code-block">&lt;header id="encabezado-principal"&gt;<br>  &lt;h1&gt;Mi Sitio Web&lt;/h1&gt;<br>&lt;/header&gt;<br><br>&lt;div id="contenido"&gt;<br>  &lt;p&gt;Texto del contenido&lt;/p&gt;<br>&lt;/div&gt;</div>
+                
+                <h3>CSS:</h3>
+                <div class="code-block">#encabezado-principal {<br>  background-color: navy;<br>  color: white;<br>  padding: 20px;<br>}<br><br>#contenido {<br>  max-width: 800px;<br>  margin: 0 auto;<br>}</div>
+                
+                <p style="margin-top: 20px;"><span class="highlight">Nota:</span> Los IDs se escriben con <span class="highlight">numeral (#)</span> en CSS</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Cascada y especificidad -->
+        <div class="slide">
+            <h2>Cascada y Especificidad</h2>
+            <div class="content">
+                <h3>Orden de Especificidad (de menor a mayor):</h3>
+                <div class="code-block">1. Selector de etiqueta (p)         →  10 puntos<br>2. Selector de clase (.texto)      → 100 puntos<br>3. Selector de ID (#principal)     → 1000 puntos<br>4. Inline styles                   → 10000 puntos</div>
+                
+                <h3>Ejemplo de conflicto:</h3>
+                <div class="code-block">p { color: blue; }           /* 10 puntos */<br>.rojo { color: red; }        /* 100 puntos - GANA */<br>#especial { color: green; }  /* 1000 puntos - GANA MÁS */</div>
+                
+                <div class="code-block">&lt;p class="rojo" id="especial"&gt;¿De qué color?&lt;/p&gt;</div>
+                
+                <p style="margin-top: 20px;"><span class="highlight">Resultado:</span> El texto será <span style="color: #4CAF50;">verde</span> porque #especial tiene mayor especificidad.</p>
+                
+                <p style="margin-top: 20px;"><strong>La "C" de CSS:</strong> Cuando hay conflicto, gana el selector más específico.</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Propiedades básicas -->
+        <div class="slide">
+            <h2>Ejemplos Básicos de CSS</h2>
+            <div class="content">
+                <h3>Colores y Texto:</h3>
+                <div class="code-block">p {<br>  color: #333333;              /* Color del texto */<br>  background-color: #f0f0f0;   /* Color de fondo */<br>  font-size: 18px;             /* Tamaño de letra */<br>  font-family: Arial, sans-serif;<br>  font-weight: bold;           /* Negrita */<br>  text-align: center;          /* Alineación */<br>  text-decoration: underline;  /* Subrayado */<br>  line-height: 1.6;            /* Altura de línea */<br>}</div>
+                
+                <h3>Valores de text-align:</h3>
+                <div class="code-block">text-align: left;     /* Izquierda (default) */<br>text-align: center;   /* Centro */<br>text-align: right;    /* Derecha */<br>text-align: justify;  /* Justificado */"</div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Box Model -->
+        <div class="slide">
+            <h2>El Modelo de Caja (Box Model)</h2>
+            <div class="content">
+                <p>Cada elemento HTML es una <span class="highlight">caja</span> con 4 capas:</p>
+                
+                <div class="box-model-demo">
+                    CONTENIDO
+                    <div style="background: rgba(255,255,255,0.2); margin-top: 10px; padding: 5px;">
+                        Padding (relleno interno)
+                        <div style="background: rgba(255,255,255,0.2); margin-top: 5px; padding: 5px;">
+                            Border (borde)
+                            <div style="background: rgba(255,255,255,0.2); margin-top: 5px; padding: 5px;">
+                                Margin (espacio externo)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="code-block">div {<br>  width: 300px;<br>  height: 200px;<br>  padding: 20px;        /* Espacio interno */<br>  border: 5px solid black;<br>  margin: 30px;         /* Espacio externo */<br>}</div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Margin, Padding, Border -->
+        <div class="slide">
+            <h2>Margin, Padding y Border</h2>
+            <div class="content">
+                <h3>Padding (Relleno interno):</h3>
+                <div class="code-block">padding: 20px;                    /* Todos los lados */<br>padding: 10px 20px;               /* Vertical | Horizontal */<br>padding: 10px 20px 15px 25px;     /* Arriba Derecha Abajo Izq */</div>
+                
+                <h3>Margin (Margen externo):</h3>
+                <div class="code-block">margin: 20px;                     /* Todos los lados */<br>margin-top: 10px;<br>margin-right: 15px;<br>margin-bottom: 10px;<br>margin-left: 15px;</div>
+                
+                <h3>Border (Borde):</h3>
+                <div class="code-block">border: 2px solid black;<br>border: 5px dashed red;<br>border-radius: 10px;              /* Esquinas redondeadas */<br>border-top: 3px dotted blue;</div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Posicionamiento -->
+        <div class="slide">
+            <h2>Posicionamiento en CSS</h2>
+            <div class="content">
+                <h3>Position: relative</h3>
+                <div class="code-block">.caja {<br>  position: relative;<br>  top: 20px;       /* Se mueve desde su posición original */<br>  left: 30px;<br>}</div>
+                <p>Se posiciona <span class="highlight">relativo a su posición normal</span></p>
+                
+                <h3>Position: absolute</h3>
+                <div class="code-block">.caja {<br>  position: absolute;<br>  top: 0;<br>  right: 0;        /* Esquina superior derecha del contenedor */<br>}</div>
+                <p>Se posiciona <span class="highlight">relativo al contenedor padre</span> con position relativo</p>
+                
+                <h3>Position: fixed</h3>
+                <div class="code-block">.navbar {<br>  position: fixed;<br>  top: 0;<br>  width: 100%;     /* Siempre visible al hacer scroll */<br>}</div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Flexbox y Grid -->
+        <div class="slide">
+            <h2>Flexbox y Grid - Layouts Modernos</h2>
+            <div class="content">
+                <h3>Flexbox - Para layouts en una dimensión:</h3>
+                <div class="code-block">.contenedor {<br>  display: flex;<br>  justify-content: center;     /* Alineación horizontal */<br>  align-items: center;         /* Alineación vertical */<br>  gap: 20px;                   /* Espacio entre elementos */<br>  flex-direction: row;         /* row | column */<br>}</div>
+                
+                <h3>Grid - Para layouts en dos dimensiones:</h3>
+                <div class="code-block">.contenedor {<br>  display: grid;<br>  grid-template-columns: 1fr 1fr 1fr;  /* 3 columnas iguales */<br>  grid-template-rows: auto;<br>  gap: 20px;<br>}<br><br>/* Ejemplo: 2 columnas en desktop */<br>grid-template-columns: 2fr 1fr;  /* 2/3 y 1/3 del ancho */</div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Mobile First y Responsividad -->
+        <div class="slide">
+            <h2>Mobile First y Responsividad</h2>
+            <div class="content">
+                <h3>¿Qué es Mobile First?</h3>
+                <p>Diseñar primero para <span class="highlight">móviles</span>, luego adaptar para pantallas grandes.</p>
+                
+                <h3>Media Queries - CSS Responsivo:</h3>
+                <div class="code-block">/* Estilos base para móvil */<br>.contenedor {<br>  display: flex;<br>  flex-direction: column;<br>  padding: 10px;<br>}<br><br>/* Tablet (768px en adelante) */<br>@media (min-width: 768px) {<br>  .contenedor {<br>    flex-direction: row;<br>    padding: 20px;<br>  }<br>}<br><br>/* Desktop (1024px en adelante) */<br>@media (min-width: 1024px) {<br>  .contenedor {<br>    max-width: 1200px;<br>    margin: 0 auto;<br>  }<br>}</div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Introducción a Tailwind CSS -->
+        <div class="slide">
+            <h2>Tailwind CSS - Framework de Utilidades</h2>
+            <div class="content">
+                <h3>¿Qué es Tailwind CSS?</h3>
+                <p>Framework CSS con <span class="highlight">clases de utilidad</span> predefinidas para desarrollo rápido.</p>
+                
+                <h3>CSS tradicional:</h3>
+                <div class="code-block">.boton {<br>  background-color: blue;<br>  color: white;<br>  padding: 12px 24px;<br>  border-radius: 8px;<br>}</div>
+                
+                <h3>Con Tailwind:</h3>
+                <div class="code-block">&lt;button class="bg-blue-500 text-white px-6 py-3 rounded-lg"&gt;<br>  Botón<br>&lt;/button&gt;</div>
+                
+                <p style="margin-top: 20px;"><strong>Ventajas:</strong></p>
+                <ul>
+                    <li>No necesitas escribir CSS personalizado</li>
+                    <li>Desarrollo mucho más rápido</li>
+                    <li>Diseño consistente</li>
+                    <li>Ya incluye sistema de responsive</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 19: Tailwind vía CDN -->
+        <div class="slide">
+            <h2>Usar Tailwind CSS vía CDN</h2>
+            <div class="content">
+                <h3>Para estudiantes - Configuración rápida:</h3>
+                <div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>  &lt;meta charset="UTF-8"&gt;<br>  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br>  &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>  &lt;h1 class="text-4xl font-bold text-center text-blue-600"&gt;<br>    ¡Hola Tailwind!<br>  &lt;/h1&gt;<br>  <br>  &lt;div class="bg-gray-100 p-8 rounded-lg shadow-lg"&gt;<br>    &lt;p class="text-gray-700"&gt;Contenido con estilo&lt;/p&gt;<br>  &lt;/div&gt;<br>&lt;/body&gt;<br>&lt;/html&gt;</div>
+                
+                <p style="margin-top: 20px;"><span class="highlight">¡Solo una línea!</span> Y ya puedes usar todas las clases de Tailwind.</p>
+                <p><strong>Perfecto para:</strong> Prototipado rápido, aprendizaje, proyectos pequeños</p>
+            </div>
+        </div>
+
+        <!-- Slide 20: Ejemplos de clases Tailwind -->
+        <div class="slide">
+            <h2>Ejemplos de Clases Tailwind</h2>
+            <div class="content">
+                <h3>Colores y Texto:</h3>
+                <div class="code-block">text-blue-500        /* Color de texto azul */<br>bg-red-600           /* Fondo rojo */<br>text-xl              /* Tamaño de texto extra grande */<br>font-bold            /* Negrita */<br>text-center          /* Texto centrado */</div>
+                
+                <h3>Espaciado:</h3>
+                <div class="code-block">p-4                  /* Padding de 1rem (16px) */<br>px-6                 /* Padding horizontal */<br>py-3                 /* Padding vertical */<br>m-8                  /* Margin de 2rem */<br>mt-4                 /* Margin top */</div>
+                
+                <h3>Layout y Flexbox:</h3>
+                <div class="code-block">flex                 /* display: flex */<br>justify-center       /* Centrar horizontalmente */<br>items-center         /* Centrar verticalmente */<br>grid grid-cols-3     /* Grid de 3 columnas */<br>gap-4                /* Espacio entre elementos */</div>
+                
+                <h3>Responsive:</h3>
+                <div class="code-block">md:text-2xl          /* En tablet: texto 2xl */<br>lg:grid-cols-4       /* En desktop: 4 columnas */</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button onclick="previousSlide()">← Anterior</button>
+        <button onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+        
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+        
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+        
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+    </script>
+</body>
+</html>
