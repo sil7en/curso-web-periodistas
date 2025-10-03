@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind CSS con CDN — Prototipos Ágiles</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+        .presentation { width: 100vw; height: 100vh; position: relative; }
+        .slide {
+            width: 100%; height: 100%; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            padding: 60px; color: white; text-align: center;
+        }
+        .slide.active { display: flex; }
+        h1 { font-size: 3.2em; margin-bottom: 24px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        h2 { font-size: 2.4em; margin-bottom: 32px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 36px; border-radius: 20px; max-width: 980px; text-align: left;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1); max-height: 80vh; overflow-y: auto;
+        }
+        .content h3 { font-size: 1.6em; margin-bottom: 14px; color: #ffd700; }
+        .content p, .content li { font-size: 1.15em; line-height: 1.8; margin-bottom: 12px; }
+        .content ul { list-style-position: inside; margin-left: 20px; }
+        .code-block {
+            background: rgba(0, 0, 0, 0.4); padding: 16px; border-radius: 10px;
+            font-family: 'Courier New', monospace; text-align: left; margin: 12px 0;
+            overflow-x: auto; font-size: 0.95em; line-height: 1.6;
+        }
+        .example-box { background: white; color: black; padding: 16px; border-radius: 10px; margin: 12px 0; }
+        .navigation {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 20px; z-index: 1000;
+        }
+        button {
+            padding: 12px 28px; font-size: 1.05em; background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px); color: white; border: 2px solid white; border-radius: 50px;
+            cursor: pointer; transition: all 0.3s;
+        }
+        button:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
+        .slide-counter {
+            position: fixed; top: 30px; right: 30px; background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 50px; font-size: 1.1em;
+        }
+        .highlight { color: #ffd700; font-weight: bold; }
+        .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">24</span>
+        </div>
+
+        <!-- 1. Título -->
+        <div class="slide active">
+            <h1>Tailwind CSS con CDN</h1>
+            <p style="font-size: 1.5em; margin-top: 10px;">Prototipado ágil con clases utilitarias</p>
+            <p style="font-size: 1.1em; margin-top: 6px;">Enfoque práctico para periodistas y equipos de contenido</p>
+        </div>
+
+        <!-- 2. Temario -->
+        <div class="slide">
+            <h2>Temario del Taller</h2>
+            <div class="content">
+                <ul>
+                    <li>¿Qué es Tailwind? ¿Por qué usar CDN para prototipos?</li>
+                    <li>Instalación con CDN y estructura mínima</li>
+                    <li>Utility-first: cómo leer y combinar clases</li>
+                    <li>Escalas: espaciado, colores, tipografías</li>
+                    <li>Anchuras y contenedores: <span class="highlight">container</span>, <span class="highlight">max-w-*</span>, centrado</li>
+                    <li>Tipografía: tamaño, peso, interlineado, alineación</li>
+                    <li>Colores, fondos, bordes y sombras</li>
+                    <li>Espaciado: <span class="highlight">p-*</span>, <span class="highlight">m-*</span>, <span class="highlight">gap</span>, <span class="highlight">space-x/y</span></li>
+                    <li>Layout con Flexbox y Grid</li>
+                    <li>Responsive: prefijos <span class="highlight">sm, md, lg, xl, 2xl</span></li>
+                    <li>Estados: <span class="highlight">hover, focus, active, disabled</span></li>
+                    <li>Dark Mode con CDN</li>
+                    <li>Componentes: botones, cards, navbar, formularios</li>
+                    <li>Patrones para noticias y artículos</li>
+                    <li>Personalización rápida con <span class="highlight">tailwind.config</span> (CDN)</li>
+                    <li>Consejos, limitaciones del CDN y recursos</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 3. Qué y por qué -->
+        <div class="slide">
+            <h2>¿Qué es Tailwind CSS y por qué usarlo?</h2>
+            <div class="content">
+                <p><span class="highlight">Tailwind CSS</span> es un framework <strong>utility‑first</strong>: provee clases pequeñas y composables para construir interfaces rápido sin salir del HTML.</p>
+                <h3>Para prototipos rápidos (CDN):</h3>
+                <ul>
+                    <li>Sin build ni instalación: <strong>una sola línea</strong> y a trabajar</li>
+                    <li>Iteración veloz: cambiar diseño ≈ cambiar clases</li>
+                    <li>Diseño consistente con sistema de escalas</li>
+                </ul>
+                <h3>Ojo (CDN no es para producción):</h3>
+                <ul>
+                    <li>Descarga grande (sin “purge” de clases no usadas)</li>
+                    <li>Sin <code>@apply</code> ni plugins complejos</li>
+                    <li>Perfecto para clases, demos y enseñanza</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. Instalación / CDN -->
+        <div class="slide">
+            <h2>Instalación con CDN</h2>
+            <div class="content">
+                <h3>Estructura mínima:</h3>
+                <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+  &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body class="bg-gray-50"&gt;
+  &lt;h1 class="text-3xl font-bold text-blue-600"&gt;¡Hola Tailwind!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                <p style="margin-top: 10px;">Abre el archivo en el navegador. Sube/simplifica el diseño cambiando clases.</p>
+                <p>Para probar online: <a href="https://play.tailwindcss.com" target="_blank" style="color:#ffd700;">Tailwind Play</a>.</p>
+            </div>
+        </div>
+
+        <!-- 5. Utility-first -->
+        <div class="slide">
+            <h2>Utility‑first: leer y combinar clases</h2>
+            <div class="content">
+                <div class="code-block">&lt;div class="p-6 bg-white rounded-xl shadow-md flex items-center space-x-4"&gt;
+  &lt;div class="h-12 w-12 rounded-full bg-blue-500"&gt;&lt;/div&gt;
+  &lt;div&gt;
+    &lt;h3 class="text-lg font-semibold"&gt;Tarjeta&lt;/h3&gt;
+    &lt;p class="text-gray-600"&gt;Construida solo con utilidades.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+                <ul>
+                    <li><span class="highlight">p-6</span>: padding</li>
+                    <li><span class="highlight">rounded-xl</span>: borde redondeado</li>
+                    <li><span class="highlight">shadow-md</span>: sombra</li>
+                    <li><span class="highlight">flex items-center space-x-4</span>: layout y separación horizontal</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 6. Escalas -->
+        <div class="slide">
+            <h2>Escalas de diseño (valores comunes)</h2>
+            <div class="content">
+                <h3>Espaciado (rem ≈ px):</h3>
+                <div class="code-block">0 → 0px | 1 → 0.25rem (4px) | 2 → 0.5rem (8px) | 3 → 0.75rem (12px) | 4 → 1rem (16px)
+6 → 1.5rem (24px) | 8 → 2rem (32px) | 10 → 2.5rem (40px) | 12 → 3rem (48px)</div>
+                <h3>Colores (ejemplos):</h3>
+                <div class="code-block">text-gray-700 · bg-indigo-50 · border-red-300 · bg-blue-600 hover:bg-blue-700</div>
+                <h3>Tipografía (tamaños):</h3>
+                <div class="code-block">text-xs · text-sm · text-base · text-lg · text-xl · text-2xl · text-3xl · text-4xl</div>
+            </div>
+        </div>
+
+        <!-- 7. Contenedores y ancho -->
+        <div class="slide">
+            <h2>Contenedores y anchuras</h2>
+            <div class="content">
+                <div class="code-block">&lt;div class="container mx-auto px-4"&gt;...&lt;/div&gt;
+&lt;div class="max-w-md mx-auto bg-white p-6 rounded-xl"&gt;Caja centrada&lt;/div&gt;
+&lt;div class="w-full md:w-1/2"&gt;50% en md+&lt;/div&gt;</div>
+                <ul>
+                    <li><span class="highlight">container</span>: ancho máximo por breakpoint</li>
+                    <li><span class="highlight">mx-auto</span>: centra horizontalmente</li>
+                    <li><span class="highlight">max-w-*</span>: controla el ancho máximo del bloque</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 8. Tipografía -->
+        <div class="slide">
+            <h2>Tipografía rápida</h2>
+            <div class="content">
+                <div class="code-block">&lt;h1 class="text-3xl md:text-4xl font-bold"&gt;Titular&lt;/h1&gt;
+&lt;p class="text-gray-700 leading-relaxed"&gt;Párrafo con interlineado amable.&lt;/p&gt;
+&lt;p class="text-sm text-gray-500 italic"&gt;Bajada / copete.&lt;/p&gt;
+&lt;p class="text-base md:text-lg text-justify"&gt;Texto justificado.&lt;/p&gt;</div>
+                <ul>
+                    <li><span class="highlight">leading-*</span>: interlineado</li>
+                    <li><span class="highlight">tracking-*</span>: espaciado de letras</li>
+                    <li><span class="highlight">text-left/center/right/justify</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 9. Colores y fondos -->
+        <div class="slide">
+            <h2>Colores, fondos y bordes</h2>
+            <div class="content">
+                <div class="code-block">&lt;div class="bg-white border border-gray-200 rounded-lg p-6"&gt;
+  &lt;h3 class="text-blue-600 font-semibold"&gt;Caja&lt;/h3&gt;
+  &lt;p class="text-gray-700"&gt;Texto&lt;/p&gt;
+&lt;/div&gt;</div>
+                <div class="code-block">text-red-600 · bg-emerald-50 · border-yellow-300 · rounded-full · shadow-lg</div>
+            </div>
+        </div>
+
+        <!-- 10. Espaciado -->
+        <div class="slide">
+            <h2>Espaciado y separación</h2>
+            <div class="content">
+                <div class="code-block">p-4 · px-6 · py-2 · m-4 · mt-8 · -mx-2
+space-y-3 (hijos en columna) · space-x-4 (hijos en fila)
+gap-2 · gap-4 · gap-6 (para grid/flex)</div>
+                <p>Usa <span class="highlight">space-*</span> para listas/columnas y <span class="highlight">gap</span> para grillas o flex.</p>
+            </div>
+        </div>
+
+        <!-- 11. Flexbox -->
+        <div class="slide">
+            <h2>Layout con Flexbox</h2>
+            <div class="content">
+                <div class="code-block">&lt;div class="flex items-center justify-between gap-4"&gt;
+  &lt;div class="flex-1"&gt;Izquierda&lt;/div&gt;
+  &lt;button class="bg-blue-600 text-white px-4 py-2 rounded"&gt;Acción&lt;/button&gt;
+&lt;/div&gt;</div>
+                <div class="code-block">flex · flex-col · items-center · justify-center · flex-wrap · basis-1/2 · grow</div>
+            </div>
+        </div>
+
+        <!-- 12. Grid -->
+        <div class="slide">
+            <h2>Layout con Grid</h2>
+            <div class="content">
+                <div class="code-block">&lt;div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"&gt;
+  &lt;article class="bg-white p-4 rounded-xl shadow"&gt;Nota 1&lt;/article&gt;
+  &lt;article class="bg-white p-4 rounded-xl shadow"&gt;Nota 2&lt;/article&gt;
+  &lt;article class="bg-white p-4 rounded-xl shadow"&gt;Nota 3&lt;/article&gt;
+&lt;/div&gt;</div>
+                <div class="code-block">grid-cols-2 · grid-cols-12 · col-span-3 · auto-rows-fr</div>
+            </div>
+        </div>
+
+        <!-- 13. Responsive -->
+        <div class="slide">
+            <h2>Responsive con prefijos</h2>
+            <div class="content">
+                <div class="code-block">&lt;!-- Mobile first --&gt;
+&lt;div class="p-4 md:p-8 lg:p-12"&gt;…&lt;/div&gt;
+&lt;button class="w-full md:w-auto"&gt;Botón&lt;/button&gt;
+&lt;nav class="flex flex-col md:flex-row gap-2 md:gap-6"&gt;…&lt;/nav&gt;</div>
+                <p>Breakpoints por defecto: <span class="highlight">sm (640)</span>, <span class="highlight">md (768)</span>, <span class="highlight">lg (1024)</span>, <span class="highlight">xl (1280)</span>, <span class="highlight">2xl (1536)</span>.</p>
+            </div>
+        </div>
+
+        <!-- 14. Estados -->
+        <div class="slide">
+            <h2>Estados y variantes</h2>
+            <div class="content">
+                <div class="code-block">&lt;button class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus:ring-2 focus:ring-blue-400 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded" disabled&gt;Acción&lt;/button&gt;</div>
+                <p>Combina <span class="highlight">hover:</span>, <span class="highlight">focus:</span>, <span class="highlight">active:</span>, <span class="highlight">disabled:</span>, etc.</p>
+            </div>
+        </div>
+
+        <!-- 15. Dark mode -->
+        <div class="slide">
+            <h2>Dark Mode (CDN)</h2>
+            <div class="content">
+                <h3>Config rápida:</h3>
+                <div class="code-block">&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+&lt;script&gt;
+  tailwind.config = {
+    darkMode: 'class'
+  }
+&lt;/script&gt;</div>
+                <h3>Uso:</h3>
+                <div class="code-block">&lt;html class="dark"&gt;
+  &lt;body class="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100"&gt;...&lt;/body&gt;
+&lt;/html&gt;</div>
+                <p>Alterna la clase <span class="highlight">dark</span> en <code>&lt;html&gt;</code> con JS para cambiar el tema.</p>
+            </div>
+        </div>
+
+        <!-- 16. Botones -->
+        <div class="slide">
+            <h2>Componente: Botones</h2>
+            <div class="content">
+                <div class="code-block">&lt;button class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg shadow"&gt;
+  &lt;span&gt;Primario&lt;/span&gt;
+&lt;/button&gt;
+&lt;button class="ml-3 inline-flex items-center gap-2 border border-gray-300 hover:bg-gray-50 text-gray-700 px-5 py-2.5 rounded-lg"&gt;
+  Secundario
+&lt;/button&gt;</div>
+                <p>Reutiliza clases para variantes: color, borde, tamaño, iconos.</p>
+            </div>
+        </div>
+
+        <!-- 17. Card de noticia -->
+        <div class="slide">
+            <h2>Componente: Card de noticia</h2>
+            <div class="content">
+                <div class="code-block">&lt;article class="bg-white rounded-xl shadow overflow-hidden"&gt;
+  &lt;img class="w-full h-48 object-cover" src="https://picsum.photos/800/400" alt="" /&gt;
+  &lt;div class="p-6"&gt;
+    &lt;div class="text-sm text-gray-500"&gt;Política · 2 min&lt;/div&gt;
+    &lt;h3 class="mt-1 text-xl font-semibold"&gt;Título de la nota&lt;/h3&gt;
+    &lt;p class="mt-2 text-gray-700"&gt;Resumen breve del contenido...&lt;/p&gt;
+    &lt;div class="mt-4 flex items-center justify-between"&gt;
+      &lt;a class="text-blue-600 hover:underline" href="#"&gt;Leer más&lt;/a&gt;
+      &lt;span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded"&gt;Última hora&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</div>
+                <p>Útil en grillas para portada: ajusta <span class="highlight">grid-cols</span> por breakpoint.</p>
+            </div>
+        </div>
+
+        <!-- 18. Navbar -->
+        <div class="slide">
+            <h2>Componente: Navbar responsive</h2>
+            <div class="content">
+                <div class="code-block">&lt;header class="bg-white border-b"&gt;
+  &lt;div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between"&gt;
+    &lt;a class="font-bold" href="#"&gt;Medio&lt;/a&gt;
+    &lt;nav class="hidden md:flex items-center gap-6"&gt;
+      &lt;a class="text-gray-700 hover:text-blue-600" href="#"&gt;Portada&lt;/a&gt;
+      &lt;a class="text-gray-700 hover:text-blue-600" href="#"&gt;Secciones&lt;/a&gt;
+      &lt;a class="text-gray-700 hover:text-blue-600" href="#"&gt;Opinión&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;button class="md:hidden p-2" aria-label="Abrir menú"&gt;☰&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</div>
+                <p>Con JS mínimo, alterna un menú móvil usando <span class="highlight">hidden</span>/<span class="highlight">block</span>.</p>
+            </div>
+        </div>
+
+        <!-- 19. Layout de artículo -->
+        <div class="slide">
+            <h2>Patrón: Artículo periodístico</h2>
+            <div class="content">
+                <div class="code-block">&lt;main class="max-w-3xl mx-auto px-4 py-8"&gt;
+  &lt;h1 class="text-3xl md:text-4xl font-bold"&gt;Título de la nota&lt;/h1&gt;
+  &lt;p class="mt-2 text-gray-500"&gt;Autor · Fecha · Sección&lt;/p&gt;
+  &lt;img class="mt-6 rounded-lg w-full" src="https://picsum.photos/1200/600" alt="" /&gt;
+  &lt;article class="prose prose-gray max-w-none mt-6"&gt;
+    &lt;p&gt;Párrafos del artículo...&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/main&gt;</div>
+                <p>Para tipografía rica, puedes usar <span class="highlight">prose</span> con el plugin Typography (no disponible en CDN puro). Alternativa: clases utilitarias por párrafo.</p>
+            </div>
+        </div>
+
+        <!-- 20. Formularios -->
+        <div class="slide">
+            <h2>Formularios accesibles</h2>
+            <div class="content">
+                <div class="code-block">&lt;label class="block text-sm font-medium text-gray-700" for="email"&gt;Email&lt;/label&gt;
+&lt;input id="email" type="email" class="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="nombre@medio.com" /&gt;
+&lt;button class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"&gt;Enviar&lt;/button&gt;</div>
+                <p>Usa <span class="highlight">focus:ring</span> y buen contraste para accesibilidad.</p>
+            </div>
+        </div>
+
+        <!-- 21. Alertas / Badges -->
+        <div class="slide">
+            <h2>Alertas y badges</h2>
+            <div class="content">
+                <div class="code-block">&lt;div class="rounded-lg border-l-4 border-emerald-500 bg-emerald-50 p-4 text-emerald-800"&gt;
+  &lt;strong&gt;Éxito:&lt;/strong&gt; La operación se realizó correctamente.
+&lt;/div&gt;
+&lt;span class="inline-flex items-center rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700"&gt;Suscriptores&lt;/span&gt;</div>
+            </div>
+        </div>
+
+        <!-- 22. Personalización con CDN -->
+        <div class="slide">
+            <h2>Personalización con tailwind.config (CDN)</h2>
+            <div class="content">
+                <h3>Agrega color de marca y fuente:</h3>
+                <div class="code-block">&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"&gt;
+&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+&lt;script&gt;
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { brand: '#0ea5e9' },
+        fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] }
+      }
+    }
+  }
+&lt;/script&gt;
+&lt;!-- Uso --&gt;
+&lt;h1 class="text-brand font-sans"&gt;Marca&lt;/h1&gt;</div>
+                <p>Con CDN, la personalización es limitada pero suficiente para prototipos.</p>
+            </div>
+        </div>
+
+        <!-- 23. Utilidades útiles -->
+        <div class="slide">
+            <h2>Utilidades que aceleran</h2>
+            <div class="content">
+                <div class="code-block">shadow-sm · shadow · shadow-lg · ring-1 ring-gray-300
+rounded · rounded-md · rounded-lg · rounded-full
+aspect-video · object-cover · overflow-hidden
+line-clamp-* (plugin) · truncate · break-words
+divide-y divide-gray-200 · space-x-* · space-y-*</div>
+                <p>Recuerda: algunos como <span class="highlight">line-clamp</span> requieren plugins (no CDN).</p>
+            </div>
+        </div>
+
+        <!-- 24. Consejos y recursos -->
+        <div class="slide">
+            <h2>Consejos, límites del CDN y recursos</h2>
+            <div class="content">
+                <h3>Consejos para redacciones:</h3>
+                <ul>
+                    <li>Prototipa primero, define después estilos finales</li>
+                    <li>Usa grillas prefabricadas y tarjetas para portadas</li>
+                    <li>Documenta clases comunes de tu marca</li>
+                </ul>
+                <h3>Limitaciones del CDN:</h3>
+                <ul>
+                    <li>CSS pesado (no elimina clases no usadas)</li>
+                    <li>Sin plugins avanzados ni directiva <code>@apply</code></li>
+                    <li>No recomendado para producción</li>
+                </ul>
+                <h3>Recursos:</h3>
+                <ul>
+                    <li>Docs: <a href="https://tailwindcss.com/docs" target="_blank" style="color:#ffd700;">tailwindcss.com/docs</a></li>
+                    <li>Playground: <a href="https://play.tailwindcss.com" target="_blank" style="color:#ffd700;">play.tailwindcss.com</a></li>
+                    <li>Componentes: Tailwind UI (pago) y comunidades open source</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="navigation">
+        <button onclick="previousSlide()">← Anterior</button>
+        <button onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('total-slides').textContent = totalSlides;
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function previousSlide() { showSlide(currentSlide - 1); }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+    </script>
+</body>
+</html>
